@@ -1,0 +1,8 @@
+Wird ein Task in der App erstellt erstellt die App dazu eine Tages-Instanz.
+Tage > 365 Tage abstand werden ausgelagert. -> SQL                    Dafür --> Tool das Tage in SQL laden kann und zurück 
+
+Application besitze Liste von Tagen 
+
+Sections maybe ArrayList besse. 
+
+Maybe Day weglassen und zweidimensaionales array dafürmit (LocalDate|Kanban)

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="641.0" prefWidth="1020.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ListView fx:id="doneList" layoutX="410.0" layoutY="158.0" prefHeight="449.0" prefWidth="200.0" />
+      <Label fx:id="doneLabel" alignment="CENTER" layoutX="410.0" layoutY="99.0" prefHeight="48.0" prefWidth="200.0" text="Done">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="kanbanLabel" alignment="CENTER" layoutX="410.0" layoutY="25.0" prefHeight="48.0" prefWidth="200.0" text="Kanban">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <ListView fx:id="backlogShift" layoutX="610.0" layoutY="158.0" prefHeight="449.0" prefWidth="200.0" />
+      <Label fx:id="backlogLabel" alignment="CENTER" layoutX="610.0" layoutY="99.0" prefHeight="48.0" prefWidth="200.0" text="Backlog">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <ListView fx:id="onGoingList" layoutX="210.0" layoutY="158.0" prefHeight="449.0" prefWidth="200.0" />
+      <Label fx:id="onGoingLabel" alignment="CENTER" layoutX="210.0" layoutY="99.0" prefHeight="48.0" prefWidth="200.0" text="On Going">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <ListView fx:id="shiftList" layoutX="810.0" layoutY="158.0" prefHeight="449.0" prefWidth="200.0" />
+      <Label fx:id="shiftLabel" alignment="CENTER" layoutX="810.0" layoutY="99.0" prefHeight="48.0" prefWidth="200.0" text="Shift">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <ListView fx:id="toDoList" layoutX="10.0" layoutY="158.0" prefHeight="449.0" prefWidth="200.0" />
+      <Label fx:id="toDoLabel" alignment="CENTER" layoutX="10.0" layoutY="99.0" prefHeight="48.0" prefWidth="200.0" text="To Do">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
