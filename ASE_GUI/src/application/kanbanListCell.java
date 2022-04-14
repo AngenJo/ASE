@@ -53,7 +53,6 @@ public class kanbanListCell extends ListCell<String> {
 			if (getItem() == null) {
 				return;
 			}
-
 			Dragboard db = event.getDragboard();
 			boolean success = false;
 
@@ -74,16 +73,19 @@ public class kanbanListCell extends ListCell<String> {
 				}
 				success = true;
 			}
+			
 			event.setDropCompleted(success);
 			event.consume();
 		});
 
 		setOnDragDone(event -> {
-			Dragboard db = event.getDragboard();
-			if (db.getString() == getItem()) {
-				getListView().getItems().remove(getItem());
+			if (event.getGestureTarget()!=null) {
+				Dragboard db = event.getDragboard();
+				if (db.getString() == getItem()) {
+					getListView().getItems().remove(getItem());
+				}
+				event.consume();
 			}
-			event.consume();
 		});
 	}
 

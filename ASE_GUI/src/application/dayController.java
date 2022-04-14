@@ -23,6 +23,7 @@ import makeYourDay.applicationLogic.Application;
 import makeYourDay.applicationLogic.Day;
 import makeYourDay.core.Task;
 import makeYourDay.enums.Priority;
+import makeYourDay.enums.Topic;
 
 
 public class dayController implements Initializable{
@@ -50,6 +51,7 @@ public class dayController implements Initializable{
 		//Day             ///////////////////////////////////////////////////////////////////
 		Day day1 = new Day(LocalDate.of(2022, 4, 11));
 		day1.addItem(task1);
+		task2.setCurrentTopic(Topic.DONE);
 		day1.addItem(task2);
 		Day day2 = new Day(LocalDate.of(2022, 4, 12));
 		day2.addItem(task3);
