@@ -82,12 +82,12 @@ public class Task extends CustomLinkedList<Task> implements I_Task{
 	}
 
 	// note
-	public Note getNote() {
-		return note;
+	public String getNote() {
+		return note.getNote();
 	}
 
-	public void setNote(Note note) {
-		this.note = note;
+	public void setNote(String note) {
+		this.note.writeNote(note);
 	}
 
 	// priority

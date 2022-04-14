@@ -28,4 +28,14 @@ public class Categorie extends CustomLinkedList<Task> implements I_Categorie{
 	public Priority getPriority() {
 		return this.priority;
 	}
+	
+	public Task getTask(String Name) {
+		LinkedList<Task> tasks =(LinkedList<Task>) this.linkedList;
+		for(Task task:tasks) {
+			if(task.getName() == Name) {
+				return task;
+			}
+		}
+		return null;
+	}
 }

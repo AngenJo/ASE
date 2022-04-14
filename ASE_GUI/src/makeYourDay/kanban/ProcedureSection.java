@@ -44,4 +44,14 @@ public class ProcedureSection extends Section<Categorie> implements I_ProcedureS
 		}
 		return tasks;
 	}
+	
+	public Task getTask(String Name) {
+		for(Categorie categorie:linkedList) {
+			Task task = categorie.getTask(Name);
+			if(task != null) {
+				return task;
+			}
+		}
+		return null;
+	}
 }

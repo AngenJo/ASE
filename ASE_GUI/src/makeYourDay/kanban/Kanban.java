@@ -22,7 +22,7 @@ public class Kanban extends CustomLinkedList<Section> implements I_Kanban{
 		BenefitSection shift = new BenefitSection(Topic.SHIFT);
 		this.linkedList.add(shift);
 	}
-
+	
 	public void addTask(Task task) {
 		Topic topic = task.getCurrentTopic();
 		if(topic.getTopicValue() <=2 ) {

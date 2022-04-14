@@ -22,4 +22,14 @@ public abstract class Section<T1> extends CustomLinkedList<T1> implements I_Sect
 	public LinkedList<Task> getTasks() {
 		return (LinkedList<Task>) this.linkedList;
 	}
+	
+	public Task getTask(String Name) {
+		LinkedList<Task> tasks =(LinkedList<Task>) this.linkedList;
+		for(Task task:tasks) {
+			if(task.getName() == Name) {
+				return task;
+			}
+		}
+		return null;
+	}
 }

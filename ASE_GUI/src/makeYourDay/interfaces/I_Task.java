@@ -27,9 +27,9 @@ public interface I_Task {
 	public void setDate(LocalDate date);
 
 	// note
-	public Note getNote();
+	public String getNote();
 
-	public void setNote(Note note);
+	public void setNote(String note);
 
 	// priority
 	public Priority getPriority();

@@ -19,7 +19,7 @@ public class Note implements I_Note {
 		}
 	}
 
-	public String GetNote() {
+	public String getNote() {
 		return this.content;
 	}
 
