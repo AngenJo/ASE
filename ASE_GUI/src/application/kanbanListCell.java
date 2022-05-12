@@ -57,7 +57,7 @@ public class kanbanListCell extends ListCell<String> {
 			boolean success = false;
 
 			if (db.hasString()) {
-
+				getListView().fireEvent(event);
 				ObservableList<String> items = getListView().getItems();
 				if (items.indexOf(db.getString()) == -1) {
 					getListView().getItems().add(db.getString());
@@ -79,13 +79,15 @@ public class kanbanListCell extends ListCell<String> {
 		});
 
 		setOnDragDone(event -> {
-			if (event.getGestureTarget()!=null) {
+		if (event.getGestureTarget()!=null) {
+			System.out.print(event.getTarget());
+			System.out.print("\n");
 				Dragboard db = event.getDragboard();
 				if (db.getString() == getItem()) {
 					getListView().getItems().remove(getItem());
 				}
 				event.consume();
-			}
+		}
 		});
 	}
 

@@ -1,32 +1,27 @@
 package application;
 
 import java.io.IOException;
+import java.time.LocalTime;
 import java.util.LinkedList;
 
 import application.kanbanController;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.event.EventTarget;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.Labeled;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import makeYourDay.kanban.Kanban;
 import makeYourDay.kanban.Section;
 import makeYourDay.core.Task;
@@ -128,8 +123,10 @@ public class kanbanController {
 					int targetIndex = getIndex(listView);
 					Section<?> targetSection = kanban.getSection(targetIndex);
 					Task task = targetSection.getTask(cell.getItem());
+					listView.getItems().remove(cell.getItem());
+					kanban.removeTask(task);
 					try {
-						openTaskWindow(task);
+						openTaskWindow(task, listView);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -141,15 +138,19 @@ public class kanbanController {
 		listview.setCellFactory(param -> new kanbanListCell());
 	}
 
-	private void openTaskWindow(Task task) throws IOException {
+	private void openTaskWindow(Task task, ListView<String> listView) throws IOException {
 		AnchorPane secondaryLayout = FXMLLoader.load(getClass().getResource("Task.fxml"));
 
 		Scene secondScene = new Scene(secondaryLayout);
-		setUpTaskWindow(secondaryLayout, task);
+		setUpTaskWindow(secondaryLayout, task ,listView);
 		// New window (Stage)
 		Stage newWindow = new Stage();
 		newWindow.setTitle("Second Stage");
 		newWindow.setScene(secondScene);
+		newWindow.setOnCloseRequest(event ->{
+			kanban.addTask(task);
+			listView.getItems().add(task.getName());
+		});
 
 		// Specifies the modality for new window.
 		newWindow.initModality(Modality.WINDOW_MODAL);
@@ -163,19 +164,19 @@ public class kanbanController {
 		newWindow.show();
 	}
 
-	private void setUpTaskWindow(AnchorPane parent, Task task) {
+	private void setUpTaskWindow(AnchorPane parent, Task task, ListView<String> listView) {
 		ObservableList<Node> fields = parent.getChildren();
 		for (Node node : fields) {
 			if (node.getId() != null) {
 				if (node.getId().equals("datePicker")) {
 					DatePicker datePicker = (DatePicker) node;
-					datePicker.setValue(task.getDate());
+					datePicker.setValue(task.getDate().toLocalDate());
 				} else if (node.getId().equals("nameField")) {
 					TextField nameField = (TextField) node;
 					nameField.setText(task.getName());
 				} else if (node.getId().equals("choicePriority")) {
 					ChoiceBox<String> choicePriority = (ChoiceBox<String>) node;
-					String[] prioStrings = {"Very High", "High", "Medium", "Low", "Very Low"};
+					String[] prioStrings = { "Very High", "High", "Medium", "Low", "Very Low" };
 					Priority priority = task.getPriority();
 					int indexPriority = priority.getPriorityValue();
 					ObservableList<String> priorities = choicePriority.getItems();
@@ -187,7 +188,7 @@ public class kanbanController {
 					taskNumberField.setText(Integer.toString(task.getTaskNumber()));
 				} else if (node.getId().equals("choiceTopic")) {
 					ChoiceBox<String> choiceTopic = (ChoiceBox<String>) node;
-					String[] topicStrings = {"To Do", "On Going", "Done", "Backlog", "Shift"};
+					String[] topicStrings = { "To Do", "On Going", "Done", "Backlog", "Shift" };
 					Topic topic = task.getCurrentTopic();
 					int indexTopic = topic.getTopicValue();
 					ObservableList<String> topics = choiceTopic.getItems();
@@ -197,6 +198,16 @@ public class kanbanController {
 				} else if (node.getId().equals("noteArea")) {
 					TextField noteArea = (TextField) node;
 					noteArea.setText(task.getNote());
+				} else if (node.getId().equals("buSave")) {
+					Button buSave = (Button) node;
+					buSave.setOnAction(event -> {
+						saveTask(fields, task, listView);
+						Scene scene = parent.getScene();
+						Stage stage = (Stage)scene.getWindow();
+						stage.close();
+						kanban.addTask(task);
+						
+					});
 				}
 			}
 		}
@@ -235,5 +246,36 @@ public class kanbanController {
 			}
 		}
 		return -1;
+	}
+	
+
+	public void saveTask(ObservableList<Node> fields, Task task, ListView<String> listView) {
+		for (Node node : fields) {
+			if (node.getId() != null) {
+				if (node.getId().equals("datePicker")) {
+					DatePicker datePicker = (DatePicker) node;
+					task.setDate(datePicker.getValue().atTime(LocalTime.now()));
+				} else if (node.getId().equals("nameField")) {
+					TextField nameField = (TextField) node;
+					task.setName(nameField.getText());
+				} else if (node.getId().equals("choicePriority")) {
+					ChoiceBox<String> choicePriority = (ChoiceBox<String>) node;
+					String value = choicePriority.getValue();
+					Priority newPrio = Priority.HIGH;
+					newPrio.setPriority(value);
+					task.setPriority(newPrio);
+				} else if (node.getId().equals("choiceTopic")) {
+					ChoiceBox<String> choiceTopic = (ChoiceBox<String>) node;
+					String value = choiceTopic.getValue();
+					Topic newTopic = Topic.BACKLOG;
+					newTopic.setTopic(value);
+					task.setCurrentTopic(newTopic);
+				} else if (node.getId().equals("noteArea")) {
+					TextField noteArea = (TextField) node;
+					task.setNote(noteArea.getText());
+					listView.getItems().add(task.getName());
+				}
+			}
+		}
 	}
 }

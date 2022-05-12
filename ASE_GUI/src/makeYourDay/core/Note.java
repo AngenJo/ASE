@@ -11,7 +11,7 @@ public class Note implements I_Note {
 	}
 
 	public Note(String content) {
-		this.content = "214";
+		this.content = "";
 		if (content.length() <= MAX_TEXT_LENGTH) {
 			this.content = content;
 		} else {

@@ -3,6 +3,7 @@ package application;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
@@ -44,10 +45,10 @@ public class dayController implements Initializable{
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// SETUP Kanban   ///////////////////////////////////////////////////////////////////
 		//TASK
-		Task task1 = new Task("Einkaufen", LocalDate.now(), Priority.HIGH);
-		Task task2 = new Task("Sport", LocalDate.now(), Priority.LOW);
-		Task task3 = new Task("Hausaufgaben", LocalDate.now(), Priority.MEDIUM);
-		Task task4 = new Task("Gassigehen", LocalDate.now(), Priority.VERY_LOW);
+		Task task1 = new Task("Einkaufen", LocalDateTime.now(), Priority.HIGH);
+		Task task2 = new Task("Sport", LocalDateTime.now(), Priority.LOW);
+		Task task3 = new Task("Hausaufgaben", LocalDateTime.now(), Priority.MEDIUM);
+		Task task4 = new Task("Gassigehen", LocalDateTime.now(), Priority.VERY_LOW);
 		//Day             ///////////////////////////////////////////////////////////////////
 		Day day1 = new Day(LocalDate.of(2022, 4, 11));
 		day1.addItem(task1);

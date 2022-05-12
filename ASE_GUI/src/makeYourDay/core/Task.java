@@ -1,6 +1,8 @@
 package makeYourDay.core;
 
-import java.time.LocalDate;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -14,10 +16,10 @@ import makeYourDay.interfaces.I_Task;
  * @author angenjo1
  */
 
-public class Task extends CustomLinkedList<Task> implements I_Task{
+public class Task  implements I_Task{
 	private String name;
 	private int taskNumber;
-	private LocalDate date;
+	private LocalDateTime date;
 	private Note note;
 	private Priority priority;
 	private Place place;
@@ -25,7 +27,7 @@ public class Task extends CustomLinkedList<Task> implements I_Task{
 	//tag
 	//repetition 
 
-	public Task(String name, LocalDate date, Priority priority) {
+	public Task(String name, LocalDateTime date, Priority priority) {
 		super();
 		this.name = name;
 		this.date = date;
@@ -36,7 +38,7 @@ public class Task extends CustomLinkedList<Task> implements I_Task{
 
 	}
 
-	public Task(String name, LocalDate date, Priority priority, Place place) {
+	public Task(String name, LocalDateTime date, Priority priority, Place place) {
 		this(name, date, priority);
 		this.place = place;
 
@@ -46,7 +48,9 @@ public class Task extends CustomLinkedList<Task> implements I_Task{
 		MessageDigest md;
 		try {
 			md = MessageDigest.getInstance("SHA-256");
-			byte[] hashBytes = md.digest(name.getBytes(StandardCharsets.UTF_8));
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy H:m:s:n");
+			String string = name + date.format(formatter);
+			byte[] hashBytes = md.digest(string.getBytes(StandardCharsets.UTF_8));
 			return hashBytes.hashCode();
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
@@ -73,11 +77,11 @@ public class Task extends CustomLinkedList<Task> implements I_Task{
 	}
 
 	// date
-	public LocalDate getDate() {
-		return date;
+	public LocalDateTime getDate() {
+		return this.date;
 	}
 
-	public void setDate(LocalDate date) {
+	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
 

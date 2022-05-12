@@ -1,6 +1,6 @@
 package makeYourDay.interfaces;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import makeYourDay.core.Note;
 import makeYourDay.core.Place;
@@ -22,9 +22,9 @@ public interface I_Task {
 	public void setTaskNumber(int taskNumber);
 
 	// date
-	public LocalDate getDate();
+	public LocalDateTime getDate();
 
-	public void setDate(LocalDate date);
+	public void setDate(LocalDateTime date);
 
 	// note
 	public String getNote();
